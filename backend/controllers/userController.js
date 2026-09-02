@@ -28,15 +28,7 @@ module.exports = class userController {
             return
         }
 
-        const token = await createUserToken(user, req, res)
-        res.cookie('token', token, {
-            httpOnly: true,
-            sameSite: 'lax',
-            secure: false,
-            maxAge: 60 * 60 * 1000
-        })
-
-        /*const token = req.cookies.token */
+        await createUserToken(user, req, res)
     }
 
     static async Register(req, res) {
@@ -90,14 +82,8 @@ module.exports = class userController {
 
         try {
             const newUser = await User.create(user)
-            const token = await createUserToken(newUser, req, res)
-            res.cookie('token', token, {
-                httpOnly: true,
-                sameSite: 'lax',
-                secure: false,
-                maxAge: 60 * 60 * 1000
-            })
             res.status(422).json({message: 'Cadastro realizado com sucesso!'})
+            await createUserToken(newUser, req, res)
         } catch (error) {
             res.status(500).json({message: `Erro: ${error}`})
         }

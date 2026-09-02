@@ -1,9 +1,10 @@
 const Title = require('../models/Title')
 const getUserByToken = require('../helpers/get-user-by-token')
+const getToken = require('../helpers/get-token')
 
 module.exports = class titleController {
     static async createTitle (req, res) {
-        const token = req.cookies.token
+        const token = getToken(req)
         const {title} = req.body
 
         const user = await getUserByToken(token)
@@ -25,7 +26,7 @@ module.exports = class titleController {
     }
 
     static async getTitle (req, res) {
-        const token = req.cookies.token
+        const token = getToken(req)
         const user = getUserByToken(token)
 
         try {

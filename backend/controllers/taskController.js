@@ -1,5 +1,4 @@
 const Task = require('../models/Task')
-const getUserByToken = require('../helpers/get-user-by-token')
 
 module.exports = class taskController {
     static async createTask (req, res) {
@@ -11,7 +10,7 @@ module.exports = class taskController {
         }
 
         if(!newTask || '') {
-            res.status(211).json({message: 'Sua lista de tarefas está vazia. Escreva uma tarefa!'})
+            res.status(422).json({message: 'Sua lista de tarefas está vazia. Escreva uma tarefa!'})
             return
         }
 
