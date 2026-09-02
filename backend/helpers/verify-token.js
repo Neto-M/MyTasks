@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
 const getToken = require('./get-token')
-const { ACCESS_TOKEN_KEY } = process.env
 
 const verifyToken = async(req, res, next) => {
     if(!req.headers.authorization) {
@@ -14,7 +13,7 @@ const verifyToken = async(req, res, next) => {
     }
 
     try {
-        const verified = jwt.verify(token, ACCESS_TOKEN_KEY)
+        const verified = jwt.verify(token, process.env.ACCESS_TOKEN_KEY)
         req.user = verified
         next()
     } catch (error) {
