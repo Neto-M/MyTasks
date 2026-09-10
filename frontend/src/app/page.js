@@ -14,7 +14,7 @@ export default function Homepage() {
         if(authenticated) {
             router.push('/dashboard')
         }
-    })
+    }, [router, authenticated])
 
     function handleChange(e) {
         setUser({...user, [e.target.name]: e.target.value})
@@ -49,7 +49,7 @@ export default function Homepage() {
                     type= 'submit'
                     value= 'Entrar'
                 />
-                <p>Não tem uma conta? <a href="">Clique Aqui</a> para cadastrar-se.</p>
+                <p>Não tem uma conta? <a href="/register">Clique Aqui</a> para cadastrar-se.</p>
             </form>
         </div>
     )
