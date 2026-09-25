@@ -11,7 +11,7 @@ export function Header() {
             {authenticated ? (
                 <header>
                     <h1>Logo MyTasks</h1>
-                    <p>Sair</p>
+                    <p onClick={logout}>Sair</p>
                 </header>
             ) : ''}
         </div>
