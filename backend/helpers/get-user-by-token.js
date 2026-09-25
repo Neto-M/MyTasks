@@ -8,7 +8,7 @@ const getUserByToken = async (token) => {
 
     try {
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_KEY)
-        const UserId = decoded.userId
+        const UserId = decoded.id
         const user = await User.findOne({where: {id: UserId}})
         return user
     } catch (error) {

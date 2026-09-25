@@ -27,13 +27,14 @@ module.exports = class titleController {
 
     static async getTitle (req, res) {
         const token = getToken(req)
-        const user = getUserByToken(token)
+        const user = await getUserByToken(token)
 
         try {
             const titles = await Title.findAll({where: {UserId: user.id}})
             if(titles.length === 0) {
                 res.status(200).json({message: 'Sem Tasks'})
             }
+            res.status(200).json({title: titles})
         } catch (error) {
             res.status(500).json({error: error.message})
         }
@@ -51,6 +52,7 @@ module.exports = class titleController {
 
         try {
             await Title.update(updateTitle, {where: {id: id}})
+            res.status(200).json({message: "title atualizado com sucesso!"})
         } catch (error) {
             res.status(500).json({error: error.message})
         }

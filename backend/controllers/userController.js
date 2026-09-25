@@ -35,7 +35,7 @@ module.exports = class userController {
         const {email, username, password, confirmpassword} = req.body
 
         if(!email) {
-            res.status().json({message: 'O E-mail é obrigatório!'})
+            res.status(422).json({message: 'O E-mail é obrigatório!'})
             return
         }
 
@@ -46,7 +46,7 @@ module.exports = class userController {
         }
 
         if(!username) {
-            res.status().json({message: 'O usuário é obrigatório!'})
+            res.status(422).json({message: 'O usuário é obrigatório!'})
             return
         }
 
@@ -57,12 +57,12 @@ module.exports = class userController {
         }
 
         if(!password) {
-            res.status().json({message: 'A Senha é obrigatória!'})
+            res.status(422).json({message: 'A Senha é obrigatória!'})
             return
         }
 
         if(!confirmpassword) {
-            res.status().json({message: 'A confirmação de senha é obrigatória!'})
+            res.status(422).json({message: 'A confirmação de senha é obrigatória!'})
             return
         }
 
@@ -82,7 +82,7 @@ module.exports = class userController {
 
         try {
             const newUser = await User.create(user)
-            res.status(422).json({message: 'Cadastro realizado com sucesso!'})
+            res.status(200).json({message: 'Cadastro realizado com sucesso!'})
             await createUserToken(newUser, req, res)
         } catch (error) {
             res.status(500).json({message: `Erro: ${error}`})

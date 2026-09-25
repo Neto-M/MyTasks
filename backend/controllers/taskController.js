@@ -16,6 +16,7 @@ module.exports = class taskController {
 
         try {
             await Task.create(newTask)
+            res.status(200).json({message: 'Task criada!'})
         } catch (error) {
             res.status(500).json({error: error.message})
         }
@@ -25,7 +26,8 @@ module.exports = class taskController {
         const id = req.params.id
 
         try {
-            await Task.findAll({where: {TitleId: id}})
+            const task = await Task.findAll({where: {TitleId: id}})
+            res.status(200).json({task: task})
         } catch (error) {
             res.status(500).json({error: error.message})
         }
