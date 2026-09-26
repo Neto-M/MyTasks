@@ -20,6 +20,7 @@ module.exports = class titleController {
 
         try {
             await Title.create(createTitle)
+            res.status(200).json({message: 'title criado com sucesso!'})
         } catch (error) {
             res.status(422).json({message: 'Não foi possível criar sua task.'})
         }
