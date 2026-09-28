@@ -11,7 +11,10 @@ export default function Dashboard() {
     const router = useRouter()
     const [titles, setTitles] = useState([])
     const [newTitle, setNewTitle] = useState([])
+    const [selectedTitle, setSelectedTitle] = useState(null)
+    const [editedTitle, setEditedTitle] = useState({title: ''})
     const [tasks, setTasks] = useState([])
+    const [newTasks, setNewTasks] = useState([])
     const [token, setToken] = useState(null)
     const [isModalOpen, setModal] = useState(false)
     const config = {
@@ -41,6 +44,9 @@ export default function Dashboard() {
     }, [token])
 
     function handleClickTitle(TitleId) {
+        const title = titles.find((title) => title.id === TitleId)
+        setSelectedTitle(title || '')
+
         api.get(`/task/${TitleId}`, config).then((response) => {
             setTasks(response.data.task || [])
         }).catch((error) => {
@@ -48,7 +54,27 @@ export default function Dashboard() {
         })
     }
 
-    function handleClickTitleEdit(TitleId, newTitle) {}
+    function handleChangeEditedTitle(e) {
+        setEditedTitle({...editedTitle, [e.target.name]: e.target.value})
+    }
+
+    //A title está sendo atualizada porém apenas char. Eles não aparecem no input.
+
+    function handleSubmitTitleEdit(e, TitleId) {
+        e.preventDefault()
+
+        api.patch(`/title/edit/${TitleId}`, editedTitle, config)
+        .then(() => api.get('/title', config))
+        .then((response) => {
+            const updatedTitles = response.data.title
+            setTitles(updatedTitles)
+            const title = updatedTitles.find((title) => title.id === TitleId || null)
+            setSelectedTitle(title || null)
+            setEditedTitle({})
+        }).catch((error) => {
+            console.log('Falha na tentativa de patch do Title.', error)
+        })
+    }
 
     function handleClickTitleRemove(TitleId) {}
 
@@ -56,7 +82,7 @@ export default function Dashboard() {
         setNewTitle({...newTitle, [e.target.name]: e.target.value})
     }
 
-    function handleSubmitTitle(e) {
+    function handleSubmitNewTitle(e) {
         e.preventDefault()
 
         api.post('/title', newTitle, config)
@@ -73,29 +99,32 @@ export default function Dashboard() {
     
     return(
         <div>
-            <div className="">
-                <button onClick={() => {
-                    if(!isModalOpen) {
-                        setModal(true)
-                    } else (
-                        setModal(false)
-                    )
-                }}>+</button>
-                {isModalOpen && (
-                    <form onSubmit={handleSubmitTitle}>
-                        <Input
-                            type= 'text'
-                            name= 'title'
-                            placeholder= 'Título'
-                            value= {newTitle.title || ''}
-                            handleOnChange= {handleChangeNewTitle}
-                        />
-                        <Input type='submit' value='Criar'/>
-                    </form>
-                )}
-            </div>
             <div className="flex justify-between">
                 <div className="w-1/2 border-3">
+                    <div>
+                        <h1>pesquisa</h1>
+                        <div className="">
+                            <button onClick={() => {
+                                if(!isModalOpen) {
+                                    setModal(true)
+                                } else (
+                                    setModal(false)
+                                )
+                            }}>+</button>
+                            {isModalOpen && (
+                                <form onSubmit={handleSubmitNewTitle}>
+                                    <Input
+                                        type= 'text'
+                                        name= 'title'
+                                        placeholder= 'Título'
+                                        value= {newTitle.title || ''}
+                                        handleOnChange= {handleChangeNewTitle}
+                                    />
+                                    <Input type='submit' value='Criar'/>
+                                </form>
+                            )}
+                        </div>
+                    </div>
                     {titles.length > 0 && titles.map((title) => (
                         <div key={title.id} className="">
                             <ul>
@@ -105,6 +134,18 @@ export default function Dashboard() {
                     ))}
                 </div>
                 <div className="w-1/2 border-3">
+                            <div>
+                                <h1>Título e excluir</h1>
+                                <form onSubmit={(e) => handleSubmitTitleEdit(e, selectedTitle?.id)}>
+                                    <Input
+                                        type= 'text'
+                                        name= 'title'
+                                        placeholder= 'Título'
+                                        value= {selectedTitle?.title || ''}
+                                        handleOnChange= {handleChangeEditedTitle}
+                                    />
+                                </form>
+                            </div>
                     {tasks.length > 0 && tasks.map((task) => (
                         <div key={task.id} className="">
                             <ul>
