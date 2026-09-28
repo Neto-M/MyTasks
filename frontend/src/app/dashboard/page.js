@@ -12,11 +12,12 @@ export default function Dashboard() {
     const [titles, setTitles] = useState([])
     const [newTitle, setNewTitle] = useState([])
     const [selectedTitle, setSelectedTitle] = useState(null)
-    const [editedTitle, setEditedTitle] = useState({title: ''})
+    const [editedTitle, setEditedTitle] = useState([])
     const [tasks, setTasks] = useState([])
     const [newTasks, setNewTasks] = useState([])
     const [token, setToken] = useState(null)
     const [isModalOpen, setModal] = useState(false)
+    const [ isTitleClicked, setTitleClicked ] = useState(false) 
     const config = {
         headers: {
             Authorization: `Bearer ${JSON.parse(token)}`
@@ -49,6 +50,7 @@ export default function Dashboard() {
 
         api.get(`/task/${TitleId}`, config).then((response) => {
             setTasks(response.data.task || [])
+            setTitleClicked(false)
         }).catch((error) => {
             console.error('erro na tentativa de get /title', error)
         })
@@ -71,6 +73,7 @@ export default function Dashboard() {
             const title = updatedTitles.find((title) => title.id === TitleId || null)
             setSelectedTitle(title || null)
             setEditedTitle({})
+            setTitleClicked(false)
         }).catch((error) => {
             console.log('Falha na tentativa de patch do Title.', error)
         })
@@ -136,15 +139,20 @@ export default function Dashboard() {
                 <div className="w-1/2 border-3">
                             <div>
                                 <h1>Título e excluir</h1>
-                                <form onSubmit={(e) => handleSubmitTitleEdit(e, selectedTitle?.id)}>
-                                    <Input
-                                        type= 'text'
-                                        name= 'title'
-                                        placeholder= 'Título'
-                                        value= {selectedTitle?.title || ''}
-                                        handleOnChange= {handleChangeEditedTitle}
-                                    />
-                                </form>
+                                {isTitleClicked && (
+                                    <form onSubmit={(e) => handleSubmitTitleEdit(e, selectedTitle?.id)}>
+                                        <Input
+                                            type= 'text'
+                                            name= 'title'
+                                            placeholder= {selectedTitle?.title || 'Sem Título'}
+                                            handleOnChange= {handleChangeEditedTitle}
+                                        />
+                                    </form>
+                                )}
+                                {!isTitleClicked && (
+                                    <h1 onClick={() => setTitleClicked(true)}>{selectedTitle?.title}</h1>
+                                )}
+                                
                             </div>
                     {tasks.length > 0 && tasks.map((task) => (
                         <div key={task.id} className="">
