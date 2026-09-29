@@ -39,8 +39,13 @@ module.exports = class taskController {
             taskname: req.body.taskname
         }
 
+        if(!updateTask || '') {
+            res.status(400).json({message: 'Digite a Tarefa'})
+        }
+
         try {
             await Task.update(updateTask, {where: {id: id}})
+            res.status(200).json({message: 'Task Editada!'})
         } catch (error) {
             res.status(500).json({error: error.message})
         }
@@ -51,6 +56,7 @@ module.exports = class taskController {
 
         try {
             await Task.destroy({where: {id: id}})
+            res.status(200).json({message: 'Task removida!'})
         } catch (error) {
             res.status(500).json({error: error.message})
         }
