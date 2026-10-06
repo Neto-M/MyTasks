@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
         <UserProvider>
           <Header />
           {children}
-          <footer />
+          <Footer />
         </UserProvider>
       </body>
     </html>

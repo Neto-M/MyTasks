@@ -171,7 +171,7 @@ export default function Dashboard() {
     return(
         <div>
             <div className="flex justify-between">
-                <div className="w-1/2 border-3">
+                <div className="w-1/2 ">
                     <div>
                         <h1>pesquisa</h1>
                         <div className="">
@@ -204,7 +204,7 @@ export default function Dashboard() {
                         </div>
                     ))}
                 </div>
-                <div className="w-1/2 border-3">
+                <div className="w-1/2 ">
                     <div className="flex justify-between">
                         <h1>Título e excluir</h1>
                         {isTitleClicked && (
