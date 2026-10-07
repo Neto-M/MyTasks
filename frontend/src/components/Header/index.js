@@ -9,12 +9,12 @@ export function Header() {
 
     return(
         <div>
-            <header className="w-full h-14 flex justify-between bg-cyan-200 border-b">
+            <header className="w-full h-14 flex justify-between bg-cyan-500 border-b">
                 <Image
                     src= '/MyTasksLogo.png'
                     width={150}
                     height={100}
-                    loading="lazy"
+                    loading="eager"
                     alt= 'Logo MyTasks'
                     className="ml-5 pt-1.5"
                 />

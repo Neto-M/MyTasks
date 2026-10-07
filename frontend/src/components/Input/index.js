@@ -10,6 +10,7 @@ export function Input({type, text, name, placeholder, handleOnChange, value, mul
                 onChange= {handleOnChange}
                 value= {value}
                 {... (multiple ? {multiple} : '')}
+                className="border m-1 p-1.5 bg-gray-100 hover:bg-gray-400"
             />
         </div>
     )
