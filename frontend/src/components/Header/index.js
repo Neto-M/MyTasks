@@ -9,7 +9,7 @@ export function Header() {
 
     return(
         <div>
-            <header className="w-full h-14 flex justify-between bg-cyan-500 border-b">
+            <header className="w-full h-14 flex justify-between bg-cyan-500">
                 <Image
                     src= '/MyTasksLogo.png'
                     width={150}

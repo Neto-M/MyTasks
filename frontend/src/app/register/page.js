@@ -32,10 +32,10 @@ export default function Register() {
 
     return(
         <div>
-            <h1>Cadastro</h1>
-            <form onSubmit={handleSubmit} className="">
+            <form onSubmit={handleSubmit} className="flex flex-col items-center h-125 pt-10">
+                <h1 className="text-3xl font-bold mb-5">Cadastro</h1>
                 <Input
-                    text= 'E-mail:'
+                    text= 'E-mail: '
                     type= 'email'
                     name= 'email'
                     placeholder= 'Digite o seu E-mail'
@@ -43,7 +43,7 @@ export default function Register() {
                     value= {user.email}
                 />
                 <Input
-                    text= 'Username:'
+                    text= 'Username: '
                     type= 'username'
                     name= 'username'
                     placeholder= 'Digite o seu Usuário'
@@ -51,7 +51,7 @@ export default function Register() {
                     value={user.username}
                 />
                 <Input
-                    text= 'Senha:'
+                    text= 'Senha: '
                     type= 'password'
                     name= 'password'
                     placeholder= 'Digite a sua Senha'
@@ -59,7 +59,7 @@ export default function Register() {
                     value={user.password}
                 />
                 <Input
-                    text= 'Confirmação da Senha'
+                    text= 'Confirmação da Senha: '
                     type= 'password'
                     name= 'confirmpassword'
                     placeholder= 'Confirme sua Senha'
@@ -70,7 +70,7 @@ export default function Register() {
                     type= 'submit'
                     value= 'Cadastrar'
                 />
-                <p>Já tem conta? <a href="/">Clique Aqui</a> e faça o Login.</p>
+                <p>Já tem conta? <a href="/" className="hover:text-cyan-500">Clique Aqui</a> para efetuar o Login.</p>
             </form>           
         </div>
     )

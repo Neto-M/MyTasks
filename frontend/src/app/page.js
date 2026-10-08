@@ -29,8 +29,8 @@ export default function Homepage() {
         <div>
             <section className="flex h-125 justify-between items-center">
                 <p className="ml-52">AAAAAAAAAAAAAAAAAA</p>
-                <form onSubmit={handleSubmit} className="mr-52">
-                    <h1 className="text-center text-3xl mb-5 mr-5">Login</h1>
+                <form onSubmit={handleSubmit} className="flex flex-col items-center mr-52">
+                    <h1 className="text-3xl font-bold mb-5">Login</h1>
                     <Input
                         text= 'E-mail: '
                         type= 'email'

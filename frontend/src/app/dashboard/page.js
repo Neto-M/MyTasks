@@ -170,29 +170,66 @@ export default function Dashboard() {
     
     return(
         <div>
-            <div className="flex justify-between">
-                <div className="w-1/2 ">
-                    <div>
-                        <h1>pesquisa</h1>
-                        <div className="">
+            <div className="flex h-125 justify-between">
+                <div className="w-100">
+                    <div className="flex justify-between py-4 px-3 border-b border-r">
+                        <h1 className="w-70 border">pesquisa</h1>
+                        <div>
                             <button onClick={() => {
                                 if(!isModalOpen) {
                                     setModal(true)
                                 } else (
                                     setModal(false)
                                 )
-                            }}>+</button>
+                            }} className="
+                                h-8
+                                w-8
+                                shadow-2xl
+                                rounded
+                                bg-cyan-500
+                                text-center
+                                hover:bg-cyan-600
+                                hover:cursor-pointer
+                                mt-1">+</button>
+
                             {isModalOpen && (
-                                <form onSubmit={handleSubmitNewTitle}>
-                                    <Input
-                                        type= 'text'
-                                        name= 'title'
-                                        placeholder= 'Título'
-                                        value= {newTitle.title || ''}
-                                        handleOnChange= {handleChangeNewTitle}
-                                    />
-                                    <Input type='submit' value='Criar'/>
-                                </form>
+                                <div className="
+                                    fixed
+                                    inset-0
+                                    z-50
+                                    flex
+                                    items-center
+                                    justify-center
+                                    bg-black/60">
+                                    <form onSubmit={handleSubmitNewTitle} className="
+                                        flex
+                                        flex-col
+                                        w-70
+                                        h-50
+                                        rounded
+                                        shadow-2xl
+                                        bg-cyan-500">
+                                        <button onClick={() => setModal(false)} className="
+                                            h-8
+                                            w-8
+                                            text-center
+                                            text-xl
+                                            hover:cursor-pointer
+                                            mt-1
+                                            ml-60
+                                            mb-5">
+                                            X
+                                        </button>
+                                        <Input
+                                            type= 'text'
+                                            name= 'title'
+                                            placeholder= 'Título'
+                                            value= {newTitle.title || ''}
+                                            handleOnChange= {handleChangeNewTitle}
+                                        />
+                                        <Input type='submit' value='Criar'/>
+                                    </form>
+                                </div>
                             )}
                         </div>
                     </div>

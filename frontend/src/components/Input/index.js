@@ -1,6 +1,6 @@
 export function Input({type, text, name, placeholder, handleOnChange, value, multiple}) {
     return(
-        <div>
+        <div className="flex flex-col items-center my-1">
             <label htmlFor={name}>{text}</label>
             <input
                 type= {type}
