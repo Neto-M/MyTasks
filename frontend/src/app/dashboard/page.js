@@ -171,8 +171,8 @@ export default function Dashboard() {
     return(
         <div>
             <div className="flex h-125 justify-between">
-                <div className="w-100">
-                    <div className="flex justify-between py-4 px-3 border-b border-r">
+                <div className="w-100 border-r-4 border-b-2">
+                    <div className="flex justify-between py-4 px-3 border-b">
                         <h1 className="w-70 border">pesquisa</h1>
                         <div>
                             <button onClick={() => {
@@ -234,10 +234,13 @@ export default function Dashboard() {
                         </div>
                     </div>
                     {titles.length > 0 && titles.map((title) => (
-                        <div key={title.id} className="">
-                            <ul>
-                                <li onClick={() => {handleClickTitle(title.id)}}>{title.title}</li>
-                            </ul>
+                        <div
+                            key={title.id}
+                            onClick={() => {handleClickTitle(title.id)}}
+                            className="w-100 h-15 border-b hover:bg-cyan-600 hover:cursor-pointer">
+                                <ul>
+                                    <li className="py-4 px-5 text-lg">{title.title}</li>
+                                </ul>
                         </div>
                     ))}
                 </div>
