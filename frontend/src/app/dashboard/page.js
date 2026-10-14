@@ -63,6 +63,7 @@ export default function Dashboard() {
         api.get(`/task/${TitleId}`, config).then((response) => {
             setTasks(response.data.task || [])
             setTitleClicked(false)
+            setEditingTaskId('')
         }).catch((error) => {
             console.error('erro na tentativa de get /title', error)
         })
@@ -171,8 +172,8 @@ export default function Dashboard() {
     return(
         <div>
             <div className="flex h-125 justify-between">
-                <div className="w-100 border-r-4 border-b-2">
-                    <div className="flex justify-between py-4 px-3 border-b">
+                <div className="w-100 bg-gray-300 rounded-2xl">
+                    <div className="flex justify-between py-4 px-3 border-b-3 border-gray-600">
                         <h1 className="w-70 border">pesquisa</h1>
                         <div>
                             <button onClick={() => {
@@ -188,6 +189,7 @@ export default function Dashboard() {
                                 rounded
                                 bg-cyan-500
                                 text-center
+                                text-2xl
                                 hover:bg-cyan-600
                                 hover:cursor-pointer
                                 mt-1">+</button>
@@ -237,18 +239,24 @@ export default function Dashboard() {
                         <div
                             key={title.id}
                             onClick={() => {handleClickTitle(title.id)}}
-                            className="w-100 h-15 border-b hover:bg-cyan-600 hover:cursor-pointer">
+                            className="
+                                relative
+                                w-100
+                                h-15
+                                border-b
+                                hover:bg-cyan-600
+                                hover:cursor-pointer">
                                 <ul>
                                     <li className="py-4 px-5 text-lg">{title.title}</li>
                                 </ul>
                         </div>
                     ))}
                 </div>
-                <div className="w-1/2 ">
-                    <div className="flex justify-between">
-                        <h1>Título e excluir</h1>
+                <div className="w-238  bg-gray-300 rounded-2xl">
+                    <div className="relative flex justify-between h-17.75 border-b-3 border-gray-600">
                         {isTitleClicked && (
-                            <form onSubmit={(e) => handleSubmitTitleEdit(e, selectedTitle?.id)}>
+                            <form onSubmit={(e) => handleSubmitTitleEdit(e, selectedTitle?.id)}
+                                className="absolute left-1/2 -translate-x-1/2 mt-2">
                                 <Input
                                     type= 'text'
                                     name= 'title'
@@ -258,22 +266,49 @@ export default function Dashboard() {
                             </form>
                         )}
                         {!isTitleClicked && (
-                            <h1 onClick={() => setTitleClicked(true)}>{selectedTitle?.title}</h1>
+                            <h1 onClick={() => setTitleClicked(true)}
+                                className=" absolute left-1/2 -translate-x-1/2 mt-5 text-2xl">
+                                {selectedTitle?.title}
+                            </h1>
                         )}
                         <button
                         onClick={() => {handleClickTitleRemove(selectedTitle?.id)}}
-                        className="">
+                        className="
+                            absolute
+                            right-10
+                            shadow-2xl
+                            rounded
+                            h-8
+                            w-8
+                            hover:cursor-pointer
+                            bg-cyan-500
+                            hover:bg-cyan-600
+                            mt-5">
                             X
                         </button>
                     </div>
-                    <div>
-                        <button onClick={() => {
-                            if(!isNewTaskClicked) {
-                                setNewTaskClicked(true)
-                            } else {
-                                setNewTaskClicked(false)
-                            }
-                        }}>+</button>
+                    <div className="">
+                        <button
+                            onClick={() => {
+                                if(!isNewTaskClicked) {
+                                    setNewTaskClicked(true)
+                                } else {
+                                    setNewTaskClicked(false)
+                                }
+                            }} 
+                            className="
+                                rounded
+                                shadow-2xl
+                                h-8
+                                w-8
+                                hover:cursor-pointer
+                                bg-cyan-500
+                                hover:bg-cyan-600
+                                ml-5
+                                my-5
+                            ">
+                            +    
+                        </button>
                         {isNewTaskClicked && (
                             <form onSubmit={(e) => handleSubmitNewTask(e, selectedTitle?.id)}>
                                 <Input
@@ -284,8 +319,6 @@ export default function Dashboard() {
                                 />
                             </form>
                         )}
-
-
                     </div>
 
                     {tasks.length > 0 && tasks.map((task) => (
