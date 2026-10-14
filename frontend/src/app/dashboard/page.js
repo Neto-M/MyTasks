@@ -172,7 +172,7 @@ export default function Dashboard() {
     return(
         <div>
             <div className="flex h-125 justify-between">
-                <div className="w-100 bg-gray-300 rounded-2xl">
+                <div className="w-100 bg-gray-300 rounded-2xl overflow-y-scroll scrollbar-thumb-cyan-500">
                     <div className="flex justify-between py-4 px-3 border-b-3 border-gray-600">
                         <h1 className="w-70 border">pesquisa</h1>
                         <div>
