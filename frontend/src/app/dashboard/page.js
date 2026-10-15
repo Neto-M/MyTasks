@@ -64,6 +64,7 @@ export default function Dashboard() {
             setTasks(response.data.task || [])
             setTitleClicked(false)
             setEditingTaskId('')
+            setNewTaskClicked(false)
         }).catch((error) => {
             console.error('erro na tentativa de get /title', error)
         })
@@ -173,7 +174,7 @@ export default function Dashboard() {
         <div>
             <div className="flex h-125 justify-between">
                 <div className="w-100 bg-gray-300 rounded-2xl overflow-y-scroll scrollbar-thumb-cyan-500">
-                    <div className="flex justify-between py-4 px-3 border-b-3 border-gray-600">
+                    <div className="flex justify-between py-4 px-3">
                         <h1 className="w-70 border">pesquisa</h1>
                         <div>
                             <button onClick={() => {
@@ -253,7 +254,7 @@ export default function Dashboard() {
                     ))}
                 </div>
                 <div className="w-238  bg-gray-300 rounded-2xl">
-                    <div className="relative flex justify-between h-17.75 border-b-3 border-gray-600">
+                    <div className="relative flex justify-between h-17.75">
                         {isTitleClicked && (
                             <form onSubmit={(e) => handleSubmitTitleEdit(e, selectedTitle?.id)}
                                 className="absolute left-1/2 -translate-x-1/2 mt-2">
@@ -300,17 +301,18 @@ export default function Dashboard() {
                                 rounded
                                 shadow-2xl
                                 h-8
-                                w-8
+                                w-25
                                 hover:cursor-pointer
                                 bg-cyan-500
                                 hover:bg-cyan-600
                                 ml-5
                                 my-5
                             ">
-                            +    
+                            Nova Tarefa    
                         </button>
                         {isNewTaskClicked && (
-                            <form onSubmit={(e) => handleSubmitNewTask(e, selectedTitle?.id)}>
+                            <form onSubmit={(e) => handleSubmitNewTask(e, selectedTitle?.id)}
+                                className="flex self-baseline ml-8">
                                 <Input
                                     type= 'text'
                                     name= 'taskname'
@@ -323,9 +325,12 @@ export default function Dashboard() {
 
                     {tasks.length > 0 && tasks.map((task) => (
                         <div key={task.id} className="">
-                            <ul className="flex justify-between">
+                            <ul className="relativo flex">
                                 {editingTaskId === task.id ? (
-                                    <form onSubmit={(e) => handleSubmitTaskEdit(e, task.id, selectedTitle?.id)}>
+                                    <form onSubmit={(e) => handleSubmitTaskEdit(e, task.id, selectedTitle?.id)}
+                                        className="
+                                            ml-8
+                                        ">
                                         <Input
                                             type= 'text'
                                             name= 'taskname'
@@ -337,12 +342,22 @@ export default function Dashboard() {
                                     <li onClick={() => {
                                         setEditingTaskId(task.id)
                                         setEditedTask(task.taskname)
-                                    }}>{task.taskname}</li>
+                                    }} className="
+                                        text-lg
+                                        my-0.5
+                                        ml-10
+                                        
+                                    ">{task.taskname}</li>
                                 )}
                                 
 
                                 <button
-                                onClick={() => {handleClickTaskRemove(task.id, selectedTitle?.id)}}>
+                                    onClick={() => {handleClickTaskRemove(task.id, selectedTitle?.id)}}
+                                    className="
+                                        absolute
+                                        right-5
+                                        hover:cursor-pointer
+                                    ">
                                     X
                                 </button>
                             </ul>
