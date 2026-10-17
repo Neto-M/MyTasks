@@ -173,9 +173,9 @@ export default function Dashboard() {
     return(
         <div>
             <div className="flex h-125 justify-between">
-                <div className="w-100 bg-gray-300 rounded-2xl overflow-y-scroll scrollbar-thumb-cyan-500">
+                <div className="w-full max-w-sm bg-gray-300 rounded-2xl overflow-x-hidden overflow-y-scroll scrollbar-thumb-cyan-500">
                     <div className="flex justify-between py-4 px-3">
-                        <h1 className="w-70 border">pesquisa</h1>
+                        <h1 className="w-70 mr-3 md:mr-0 border rounded-2xl">pesquisa</h1>
                         <div>
                             <button onClick={() => {
                                 if(!isModalOpen) {
@@ -253,11 +253,11 @@ export default function Dashboard() {
                         </div>
                     ))}
                 </div>
-                <div className="w-238  bg-gray-300 rounded-2xl">
+                <div className="w-full max-w-240  overflow-x-hidden overflow-y-scroll scrollbar-thumb-cyan-500 bg-gray-300 rounded-2xl">
                     <div className="relative flex justify-between h-17.75">
                         {isTitleClicked && (
                             <form onSubmit={(e) => handleSubmitTitleEdit(e, selectedTitle?.id)}
-                                className="absolute left-1/2 -translate-x-1/2 mt-2">
+                                className="absolute left-4 sm:left-1/2 sm:-translate-x-1/2 mt-2">
                                 <Input
                                     type= 'text'
                                     name= 'title'
@@ -276,7 +276,8 @@ export default function Dashboard() {
                         onClick={() => {handleClickTitleRemove(selectedTitle?.id)}}
                         className="
                             absolute
-                            right-10
+                            right-3
+                            sm:right-10
                             shadow-2xl
                             rounded
                             h-8
@@ -322,14 +323,16 @@ export default function Dashboard() {
                             </form>
                         )}
                     </div>
-
                     {tasks.length > 0 && tasks.map((task) => (
                         <div key={task.id} className="">
-                            <ul className="relativo flex">
+                            <ul className="relativo flex hover:bg-gray-400">
                                 {editingTaskId === task.id ? (
                                     <form onSubmit={(e) => handleSubmitTaskEdit(e, task.id, selectedTitle?.id)}
                                         className="
+                                            flex
                                             ml-8
+                                            w-30
+                                            sm:w-full
                                         ">
                                         <Input
                                             type= 'text'
@@ -346,7 +349,8 @@ export default function Dashboard() {
                                         text-lg
                                         my-0.5
                                         ml-10
-                                        
+                                        w-30
+                                        sm:w-full
                                     ">{task.taskname}</li>
                                 )}
                                 
@@ -354,8 +358,9 @@ export default function Dashboard() {
                                 <button
                                     onClick={() => {handleClickTaskRemove(task.id, selectedTitle?.id)}}
                                     className="
-                                        absolute
-                                        right-5
+                                        hidden
+                                        sm:block
+                                        sm:mr-5
                                         hover:cursor-pointer
                                     ">
                                     X
