@@ -1,6 +1,7 @@
 const Title = require('../models/Title')
 const getUserByToken = require('../helpers/get-user-by-token')
 const getToken = require('../helpers/get-token')
+const { Op } = require('sequelize')
 
 module.exports = class titleController {
     static async createTitle (req, res) {
@@ -36,6 +37,30 @@ module.exports = class titleController {
                 res.status(200).json({message: 'Sem Tasks'})
             }
             res.status(200).json({title: titles})
+        } catch (error) {
+            res.status(500).json({error: error.message})
+        }
+    }
+
+    static async searchTitle (req, res) {
+        const token = getToken(req)
+        const user = getUserByToken(token)
+        const search = typeof req.query.search === 'string'
+            ? req.query.search.trim()
+            : ''
+
+        
+        try {
+            const titleData = await Title.findAll({
+                UserId: user.id,
+                where: {
+                    title: {[Op.like]: `%${search}%`},
+                },
+            })
+
+            const titles = titleData.map(result => result.get({ plain: true }))
+
+            res.status(200).json(titles)
         } catch (error) {
             res.status(500).json({error: error.message})
         }
