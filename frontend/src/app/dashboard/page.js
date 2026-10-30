@@ -15,6 +15,7 @@ export default function Dashboard() {
     const [titles, setTitles] = useState([])
     const [selectedTitle, setSelectedTitle] = useState(null)
     const [tasks, setTasks] = useState([])
+    const [search, setSearch] = useState('')
     //POST
     const [newTitle, setNewTitle] = useState([])
     const [newTask, setNewTask] = useState([])
@@ -125,6 +126,24 @@ export default function Dashboard() {
         })
 
     }
+    
+    async function handleSubmitSearch(e) {
+        e.preventDefault()
+
+        try {
+            const response = await api.get('/title/search', {
+                ...config,
+                params: { search }
+            })
+            setTitles(response.data.title)
+        } catch (error) {
+            console.error('Erro ao tentar pesquisar', error)
+        }
+    }
+
+    function handleChangeSearch(e) {
+        setSearch(e.target.value)
+    }
 
     //Tasks
 
@@ -169,13 +188,22 @@ export default function Dashboard() {
             console.log('Falha na tentativa de remove do Task', error)
         })
     }
+
     
     return(
         <div>
-            <div className="flex h-125 justify-between">
+            <div className="flex h-125 lg:h-150 xl:h-200 justify-between">
                 <div className="w-full max-w-sm bg-gray-300 rounded-2xl overflow-x-hidden overflow-y-scroll scrollbar-thumb-cyan-500">
                     <div className="flex justify-between py-4 px-3">
-                        <h1 className="w-70 mr-3 md:mr-0 border rounded-2xl">pesquisa</h1>
+                        <form onSubmit={(e) => handleSubmitSearch(e)}>
+                            <input 
+                                type="text" 
+                                className="w-40 h-8 md:w-70 md:h-10 mr-3 md:mr-0 border rounded"
+                                name="search"
+                                placeholder="Pesquisar"
+                                onChange={handleChangeSearch}
+                            />
+                        </form>
                         <div>
                             <button onClick={() => {
                                 if(!isModalOpen) {
@@ -253,7 +281,7 @@ export default function Dashboard() {
                         </div>
                     ))}
                 </div>
-                <div className="w-full max-w-240  overflow-x-hidden overflow-y-scroll scrollbar-thumb-cyan-500 bg-gray-300 rounded-2xl">
+                <div className="w-full max-w-240 lg:max-w-4xl xl:max-w-375 overflow-x-hidden overflow-y-scroll scrollbar-thumb-cyan-500 bg-gray-300 rounded-2xl">
                     <div className="relative flex justify-between h-17.75">
                         {isTitleClicked && (
                             <form onSubmit={(e) => handleSubmitTitleEdit(e, selectedTitle?.id)}

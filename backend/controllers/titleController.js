@@ -44,7 +44,7 @@ module.exports = class titleController {
 
     static async searchTitle (req, res) {
         const token = getToken(req)
-        const user = getUserByToken(token)
+        const user = await getUserByToken(token)
         const search = typeof req.query.search === 'string'
             ? req.query.search.trim()
             : ''
@@ -52,15 +52,15 @@ module.exports = class titleController {
         
         try {
             const titleData = await Title.findAll({
-                UserId: user.id,
                 where: {
+                    UserId: user.id,
                     title: {[Op.like]: `%${search}%`},
                 },
             })
 
             const titles = titleData.map(result => result.get({ plain: true }))
 
-            res.status(200).json(titles)
+            res.status(200).json({title: titles})
         } catch (error) {
             res.status(500).json({error: error.message})
         }

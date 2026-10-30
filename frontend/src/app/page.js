@@ -27,7 +27,7 @@ export default function Homepage() {
 
     return(
         <div>
-            <section className="flex min-h-125 flex-col items-center justify-center gap-8 px-5 py-10 lg:flex-row lg:gap-16">
+            <section className="flex min-h-125 flex-col items-center justify-center gap-8 px-5 py-10 lg:flex-row lg:gap-16 lg:h-150 xl:h-200">
                 <p className="w-full max-w-xs text-2xl font-bold">Sua lista de tarefas moderna. Verifique, atualize e exclua de forma prática!</p>
                 <form onSubmit={handleSubmit} className="flex w-full max-w-sm flex-col items-center">
                     <h1 className="text-3xl font-bold mb-5">Login</h1>

@@ -4,9 +4,7 @@ const createUserToken = async(user, req, res) => {
     const token = jwt.sign({
         user: user.username,
         id: user.id
-    },
-        process.env.ACCESS_TOKEN_KEY,
-        { expiresIn: '1h' })
+    }, process.env.ACCESS_TOKEN_KEY)
 
     res.status(200).json({
         message: 'Você está autenticado!',
